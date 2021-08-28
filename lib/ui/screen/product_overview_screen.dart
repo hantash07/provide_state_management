@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:shop_app_flutter/provider/cart.dart';
 import 'package:shop_app_flutter/ui/screen/cart_screen.dart';
+import 'package:shop_app_flutter/ui/widget/app_drawer.dart';
 import 'package:shop_app_flutter/ui/widget/badge.dart';
 import 'package:shop_app_flutter/ui/widget/product_grid.dart';
 
@@ -63,6 +64,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         ],
       ),
       body: ProductGrid(enumFilterOption: _enumFilterOption),
+      drawer: AppDrawer(),
     );
   }
 }

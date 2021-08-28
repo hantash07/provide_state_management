@@ -1,4 +1,3 @@
-
 import 'package:shop_app_flutter/provider/cart.dart';
 
 class Order {

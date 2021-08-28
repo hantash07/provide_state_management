@@ -33,6 +33,7 @@ class CartItem extends StatelessWidget {
         cartProvider.removeItem(productId);
       },
       child: Card(
+        elevation: 2,
         margin: EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 4,
