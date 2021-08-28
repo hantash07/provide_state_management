@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:shop_app_flutter/provider/cart.dart';
+import 'package:shop_app_flutter/ui/screen/cart_screen.dart';
+import 'package:shop_app_flutter/ui/widget/badge.dart';
 import 'package:shop_app_flutter/ui/widget/product_grid.dart';
 
 enum EnumFilterOption {
- SHOW_ALL,
- FAVOURITES,
+  SHOW_ALL,
+  FAVOURITES,
 }
 
 class ProductOverviewScreen extends StatefulWidget {
@@ -21,6 +26,18 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       appBar: AppBar(
         title: Text("My Shop"),
         actions: [
+          Consumer<CartProvider>(
+            builder: (_, cartProvider, childNotChangeable) => Badge(
+              child: childNotChangeable!,
+              value: cartProvider.counts.toString(),
+            ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+              icon: Icon(Icons.shopping_cart),
+            ),
+          ),
           PopupMenuButton(
             onSelected: (EnumFilterOption enumFilter) {
               setState(() {

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app_flutter/provider/cart.dart';
 
 import 'package:shop_app_flutter/provider/product_provider.dart';
 import 'package:shop_app_flutter/model/product.dart';
 import 'package:shop_app_flutter/ui/screen/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  ProductItem();
-
   @override
   Widget build(BuildContext context) {
     print("ProductItem's build() is called");
     final productModelProvider = Provider.of<Product>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
     return GridTile(
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(
-            ProductDetailScreen.rootName,
+            ProductDetailScreen.routeName,
             arguments: productModelProvider.id,
           );
         },
@@ -33,7 +33,8 @@ class ProductItem extends StatelessWidget {
         ),
         leading: IconButton(
           icon: Consumer<Product>(
-            builder: (ctx, product, child) => Icon( //This child is used if we want some child of widget to be not rebuild when changes occurs
+            builder: (ctx, product, child) => Icon(
+              //This child is used if we want some child of widget to be not rebuild when changes occurs
               productModelProvider.isFavourite
                   ? Icons.favorite
                   : Icons.favorite_border,
@@ -45,7 +46,13 @@ class ProductItem extends StatelessWidget {
         ),
         trailing: IconButton(
           icon: Icon(Icons.shopping_cart),
-          onPressed: () {},
+          onPressed: () {
+            cartProvider.addItem(
+              productModelProvider.id,
+              productModelProvider.title,
+              productModelProvider.price,
+            );
+          },
         ),
       ),
     );

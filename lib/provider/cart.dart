@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-class CartItem {
+class Cart {
   final String id;
   final String title;
   final int quantity;
   final double price;
 
-  CartItem({
+  Cart({
     required this.id,
     required this.title,
     required this.quantity,
@@ -14,18 +14,30 @@ class CartItem {
   });
 }
 
-class Cart with ChangeNotifier {
-  late Map<String, CartItem> _items;
+class CartProvider with ChangeNotifier {
+  Map<String, Cart> _items = {};
 
-  Map<String, CartItem> get items {
+  Map<String, Cart> get items {
     return {..._items};
+  }
+
+  int get counts {
+    return _items.length;
+  }
+
+  double get totalAmount {
+    var total = 0.0;
+    _items.forEach((key, cartItem) {
+      total += cartItem.price * cartItem.quantity;
+    });
+    return total;
   }
 
   void addItem(String productId, String title, double price) {
     if (_items.containsKey(productId)) {  //Updating the cart quantity if the product already exist otherwise add new cart into list
       _items.update(
         productId,
-        (oldItem) => CartItem(
+        (oldItem) => Cart(
           id: oldItem.id,
           title: oldItem.title,
           quantity: (oldItem.quantity + 1),
@@ -35,7 +47,7 @@ class Cart with ChangeNotifier {
     } else {
       _items.putIfAbsent(
         productId,
-        () => CartItem(
+        () => Cart(
           id: DateTime.now().toString(),
           title: title,
           quantity: 1,
@@ -43,5 +55,16 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _items = {};
+    notifyListeners();
   }
 }
