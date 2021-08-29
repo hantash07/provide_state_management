@@ -4,10 +4,13 @@ import 'package:shop_app_flutter/provider/cart.dart';
 import 'package:shop_app_flutter/provider/order_provider.dart';
 import 'package:shop_app_flutter/provider/product_provider.dart';
 import 'package:shop_app_flutter/ui/screen/cart_screen.dart';
+import 'package:shop_app_flutter/ui/screen/edit_product_screen.dart';
 import 'package:shop_app_flutter/ui/screen/order_screen.dart';
 
 import 'package:shop_app_flutter/ui/screen/product_detail_screen.dart';
 import 'package:shop_app_flutter/ui/screen/product_overview_screen.dart';
+import 'package:shop_app_flutter/ui/screen/user_products_screen.dart';
+import 'package:shop_app_flutter/ui/widget/user_product_item.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,6 +42,8 @@ class MyApp extends StatelessWidget {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
           OrderScreen.routeName: (ctx) => OrderScreen(),
+          UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+          EditProductScreen.routeName: (ctx) => EditProductScreen(),
         },
       ),
     );
